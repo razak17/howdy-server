@@ -12,6 +12,9 @@ export class Post extends TimeStamps {
 	@prop({ type: () => [String] })
 	public likes: string[];
 
+	@prop({ type: () => [String] })
+	public dislikes: string[];
+
 	@prop()
 	public image?: string;
 }

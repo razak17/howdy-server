@@ -5,7 +5,8 @@ import {
 	createPostHandler,
 	getPostHandler,
 	updatePostHandler,
-	deletePostHandler
+	deletePostHandler,
+    likePostHandler
 } from './post.controller';
 import { createPostSchema, updatePostSchema } from './post.schema';
 
@@ -28,7 +29,7 @@ router.put('/:postId', requireUser, processRequestBody(updatePostSchema.body), u
 router.delete('/:postId', requireUser, deletePostHandler);
 
 // Like Post
-router.put('/:postId/like', requireUser, helloController);
+router.put('/:postId/like', requireUser, likePostHandler);
 
 // Get User Post Timeline
 router.get('/:userId/timeline', helloController);

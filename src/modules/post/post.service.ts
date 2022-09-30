@@ -11,7 +11,7 @@ export async function findPostById(PostId: string) {
 
 export const updatePost = async (
 	postId: string,
-	update: Omit<Post, 'owner' | 'likes' | 'userId'>
+	update: Omit<Post, 'owner' | 'likes' | 'dislikes' | 'userId'>
 ) => {
 	const updatedPost = await PostModel.findByIdAndUpdate(postId, { $set: update }, { new: true });
 
@@ -20,4 +20,10 @@ export const updatePost = async (
 
 export async function deletePost(postId: string) {
 	return PostModel.findByIdAndDelete(postId);
+}
+
+export async function likePost(userId: string, postId: string) {
+	return await PostModel.findByIdAndUpdate(postId, {
+		$addToSet: { likes: userId }
+	});
 }
