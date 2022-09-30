@@ -10,7 +10,14 @@ import {
 	UpdateUserBody,
 	UpdateUserParams
 } from './user.schema';
-import { deleteUser, follow, getAllUsers, getUserById, unfollow, updateUser } from './user.service';
+import {
+	deleteUser,
+	follow,
+	getAllUsers,
+	findUserById,
+	unfollow,
+	updateUser
+} from './user.service';
 
 export async function getUserHandler(
 	req: Request<getUserParams, Record<string, unknown>, Record<string, unknown>>,
@@ -18,7 +25,7 @@ export async function getUserHandler(
 ) {
 	const { userId } = req.params;
 	try {
-		const user = await getUserById(userId);
+		const user = await findUserById(userId);
 		if (!user) {
 			return res.status(StatusCodes.NOT_FOUND).send('User not found.');
 		}

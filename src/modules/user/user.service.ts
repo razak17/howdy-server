@@ -13,7 +13,7 @@ export async function findUserByEmail(email: User['email']) {
 	return await UserModel.findOne({ email });
 }
 
-export async function getUserById(userId: string) {
+export async function findUserById(userId: string) {
 	return await UserModel.findById(userId);
 }
 

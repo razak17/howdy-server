@@ -5,6 +5,10 @@ export const createPost = async (post: Omit<Post, 'userId' | 'likes'>, userId: s
 	return await newPost.save();
 };
 
+export async function findPostById(PostId: string) {
+	return await PostModel.findById(PostId);
+}
+
 export const updatePost = async (
 	postId: string,
 	update: Omit<Post, 'owner' | 'likes' | 'userId'>
