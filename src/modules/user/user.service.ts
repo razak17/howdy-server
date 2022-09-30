@@ -29,6 +29,12 @@ export async function updateUser(
 }
 
 export async function deleteUser(userId: string) {
-  return await UserModel.findByIdAndDelete(userId);
+	return await UserModel.findByIdAndDelete(userId);
 }
 
+export async function follow(userId: string, id: string) {
+	await UserModel.findByIdAndUpdate(userId, {
+		$addToSet: { following: id }
+	});
+	return await UserModel.findByIdAndUpdate(id, { $addToSet: { followers: userId } });
+}

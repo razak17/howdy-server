@@ -26,6 +26,7 @@ const main = async () => {
 		res.send({ status: 'ok' });
 	});
 
+
 	app.use(deserializeUser);
 	app.use('/api/v1/users', userRoute);
 	app.use('/api/v1/auth', authRoute);

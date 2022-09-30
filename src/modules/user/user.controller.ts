@@ -2,8 +2,13 @@ import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
 import omit from '../../utils/omit';
-import { DeleteUserParams, UpdateUserBody, UpdateUserParams } from './user.schema';
-import { deleteUser, getAllUsers, getUserById, updateUser } from './user.service';
+import {
+	DeleteUserParams,
+	FollowUserParams,
+	UpdateUserBody,
+	UpdateUserParams
+} from './user.schema';
+import { deleteUser, follow, getAllUsers, getUserById, updateUser } from './user.service';
 
 export async function getUserHandler(req: Request, res: Response) {
 	const { userId } = req.params;
@@ -62,6 +67,24 @@ export const deleteUserHandler = async (
 	try {
 		await deleteUser(userId);
 		return res.status(StatusCodes.OK).send('User deleted.');
+	} catch (e) {
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
+	}
+};
+
+export const followHandler = async (
+	req: Request<FollowUserParams, Record<string, unknown>, Record<string, unknown>>,
+	res: Response
+) => {
+	const { id } = req.params;
+	const userId = res.locals.user._id;
+	if (id === userId) {
+		return res.status(StatusCodes.FORBIDDEN).send('Cannot follow your own account.');
+	}
+
+	try {
+		await follow(userId, id);
+		return res.status(StatusCodes.OK).send('Followed successfully.');
 	} catch (e) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
 	}

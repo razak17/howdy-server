@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import express from 'express';
 import {
 	deleteUserHandler,
+	followHandler,
 	getAllUsersHandler,
 	getUserHandler,
 	updateUserHandler
@@ -27,9 +28,9 @@ router.put('/:userId', requireUser, updateUserHandler);
 router.delete('/:userId', requireUser, deleteUserHandler);
 
 // Follow
-router.put('/:userId/follow', helloController);
+router.put('/:id/follow', requireUser, followHandler);
 
 // Unfollow
-router.put('/:userId/unfollow', helloController);
+router.put('/:id/unfollow', helloController);
 
 export default router;

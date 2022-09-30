@@ -21,6 +21,12 @@ const userParams = {
 	})
 };
 
+const followParams = {
+	params: object({
+		id: string()
+	})
+};
+
 export const registerSchema = {
 	body: object({
 		...userSchema,
@@ -62,7 +68,12 @@ export const deleteUserSchema = {
 	...userParams
 };
 
+export const followUserSchema = {
+	...followParams
+};
+
 export type RegisterBody = TypeOf<typeof registerSchema.body>;
 export type UpdateUserBody = TypeOf<typeof updateUserSchema.body>;
 export type UpdateUserParams = TypeOf<typeof updateUserSchema.params>;
 export type DeleteUserParams = TypeOf<typeof deleteUserSchema.params>;
+export type FollowUserParams = TypeOf<typeof followUserSchema.params>;
