@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { CreateChatBody, GetUserChatsParams } from './chat.schema';
-import { createChat, getUserChats } from './chat.service';
+import { CreateChatBody, findChatParams, GetUserChatsParams } from './chat.schema';
+import { createChat, findChat, getUserChats } from './chat.service';
 
 export const createChatHandler = async (
 	req: Request<Record<string, unknown>, Record<string, unknown>, CreateChatBody>,
@@ -17,7 +17,6 @@ export const createChatHandler = async (
 	}
 };
 
-
 export const getUserChatsHandler = async (
 	req: Request<GetUserChatsParams, Record<string, unknown>, Record<string, unknown>>,
 	res: Response
@@ -25,6 +24,19 @@ export const getUserChatsHandler = async (
 	const { userId } = req.params;
 	try {
 		const chats = await getUserChats(userId);
+		return res.status(StatusCodes.OK).json(chats);
+	} catch (e) {
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
+	}
+};
+
+export const findChatHandler = async (
+	req: Request<findChatParams, Record<string, unknown>, Record<string, unknown>>,
+	res: Response
+) => {
+	const { firstParticipantId, secondParticipantId } = req.params;
+	try {
+		const chats = await findChat(firstParticipantId, secondParticipantId);
 		return res.status(StatusCodes.OK).json(chats);
 	} catch (e) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);

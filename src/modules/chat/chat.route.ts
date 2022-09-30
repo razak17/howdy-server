@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { processRequestBody } from 'zod-express-middleware';
 import requireUser from '../../middleware/requireUser';
-import { createChatHandler, getUserChatsHandler } from './chat.controller';
+import { createChatHandler, findChatHandler, getUserChatsHandler } from './chat.controller';
 import { createChatSchema } from './chat.schema';
 const router = express.Router();
 
@@ -15,7 +15,7 @@ router.post('/', requireUser, processRequestBody(createChatSchema.body), createC
 // Get user chats
 router.get('/:userId', requireUser, getUserChatsHandler);
 
-// Find chat
-router.get('/find/:firstId/:secondId', requireUser, helloController);
+// Find specific chat (between two people)
+router.get('/find/:firstParticipantId/:secondParticipantId', requireUser, findChatHandler);
 
 export default router;

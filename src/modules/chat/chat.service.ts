@@ -11,3 +11,9 @@ export const getUserChats = async (userId: string) => {
 		members: { $in: [userId] }
 	});
 };
+
+export const findChat = async (firstParticipantId: string, secondParticipantId: string) => {
+	return await ChatModel.findOne({
+		members: { $all: [firstParticipantId, secondParticipantId] }
+	});
+};
