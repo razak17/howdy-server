@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import requireUser from '../../middleware/requireUser';
+import { createChatHandler } from './chat.controller';
 const router = express.Router();
 
 export const helloController = (req: Request, res: Response) => {
@@ -7,7 +8,7 @@ export const helloController = (req: Request, res: Response) => {
 };
 
 // Create chat
-router.post('/', requireUser, helloController);
+router.post('/', requireUser, createChatHandler);
 
 // Get user chats
 router.get('/:userId', requireUser, helloController);
