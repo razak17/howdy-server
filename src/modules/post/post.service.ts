@@ -34,10 +34,6 @@ export const likePost = async (userId: string, postId: string) => {
 	});
 };
 
-export const getRandomPosts = async (count = 20) => {
-	return await PostModel.find().limit(count);
-};
-
 export async function dislikePost(userId: string, postId: string) {
 	return await PostModel.findByIdAndUpdate(postId, {
 		$addToSet: { dislikes: userId },
@@ -45,7 +41,11 @@ export async function dislikePost(userId: string, postId: string) {
 	});
 }
 
-// Feed containing user's own posts as well as other users they follow
+export const getRandomPosts = async (count = 20) => {
+	return await PostModel.find().limit(count);
+};
+
+// Feed containing user's own posts as well as posts from other users they follow
 export const getFeed = async (userId: string) => {
 	const user = await UserModel.findById(userId);
 	const following = user?.following;
