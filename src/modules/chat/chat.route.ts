@@ -5,10 +5,6 @@ import { createChatHandler, findChatHandler, getUserChatsHandler } from './chat.
 import { createChatSchema } from './chat.schema';
 const router = express.Router();
 
-export const helloController = (req: Request, res: Response) => {
-	res.send({ status: 'ok' });
-};
-
 // Create chat
 router.post('/', requireUser, processRequestBody(createChatSchema.body), createChatHandler);
 

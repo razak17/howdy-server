@@ -11,6 +11,6 @@ const router = express.Router();
 router.post('/', requireUser, processRequestBody(createMessageSchema.body), createMessageHandler);
 
 // Get messages
-router.get('/:messageId', requireUser, getMessagesHandler);
+router.get('/:chatId', requireUser, getMessagesHandler);
 
 export default router;
