@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express';
+import { processRequestBody } from 'zod-express-middleware';
 import requireUser from '../../middleware/requireUser';
-import { createPostHandler } from './post.controller';
+import { createPostHandler, updatePostHandler } from './post.controller';
+import { createPostSchema, updatePostSchema } from './post.schema';
 
 export const helloController = (req: Request, res: Response) => {
 	res.send({ status: 'ok' });
@@ -9,13 +11,13 @@ export const helloController = (req: Request, res: Response) => {
 const router = express.Router();
 
 // Create Post
-router.post('/', requireUser, createPostHandler);
+router.post('/', requireUser, processRequestBody(createPostSchema.body), createPostHandler);
 
 // Get Post
 router.get('/:postId', helloController);
 
 // Update Post
-router.put('/:postId', requireUser, helloController);
+router.put('/:postId', requireUser, processRequestBody(updatePostSchema.body), updatePostHandler);
 
 // Delete Post
 router.delete('/:postId', requireUser, helloController);

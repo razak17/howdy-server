@@ -1,11 +1,27 @@
 import { TypeOf, object, string } from 'zod';
 
-const postSchema = {
+const payload = {
 	body: object({
-		userId: string(),
 		description: string({ required_error: 'description is required' }),
 		image: string().optional()
 	})
 };
 
-export type PostBody = TypeOf<typeof postSchema.body>;
+const params = {
+	params: object({
+		postId: string()
+	})
+};
+
+export const createPostSchema = {
+	...payload
+};
+
+export const updatePostSchema = {
+	...payload,
+	...params
+};
+
+export type CreatePostBody = TypeOf<typeof createPostSchema.body>;
+export type UpdatePostBody = TypeOf<typeof updatePostSchema.body>;
+export type UpdatePostParams = TypeOf<typeof updatePostSchema.params>;

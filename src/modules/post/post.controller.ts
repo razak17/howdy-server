@@ -1,13 +1,14 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { PostBody } from './post.schema';
-import { createPost } from './post.service';
+import { PostModel } from './post.model';
+import { CreatePostBody, UpdatePostBody, UpdatePostParams } from './post.schema';
+import { createPost, updatePost } from './post.service';
 
 export const createPostHandler = async (
-	req: Request<Record<string, unknown>, Record<string, unknown>, PostBody>,
+	req: Request<Record<string, unknown>, Record<string, unknown>, CreatePostBody>,
 	res: Response
 ) => {
-	const userId = res.locals.user._id;
+	const { _id: userId } = res.locals.user;
 
 	try {
 		const newPost = await createPost({ ...req.body }, userId);
@@ -15,4 +16,25 @@ export const createPostHandler = async (
 	} catch (e) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
 	}
+};
+
+export const updatePostHandler = async (
+	req: Request<UpdatePostParams, Record<string, unknown>, UpdatePostBody>,
+	res: Response
+) => {
+	const { _id: userId } = res.locals.user;
+	const { postId } = req.params;
+
+	const post = await PostModel.findById(postId);
+
+	if (!post) {
+		return res.status(StatusCodes.NOT_FOUND).send('post not found.');
+	}
+
+	if (String(post.userId) !== String(userId)) {
+		return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized.');
+	}
+
+	const updatedPost = await updatePost(postId, { ...req.body });
+	return res.status(StatusCodes.OK).json(updatedPost);
 };
