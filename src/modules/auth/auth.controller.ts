@@ -2,10 +2,11 @@ import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import argon2 from 'argon2';
 
-import { LoginBody, RegisterBody } from './auth.schema';
+import { LoginBody } from './auth.schema';
 import { createUser, findUserByEmail } from './auth.service';
 import omit from '../../utils/omit';
 import { signJwt } from './auth.utils';
+import { RegisterBody } from '../user/user.schema';
 
 const COOKIE_NAME = 'accessToken';
 
@@ -38,8 +39,6 @@ export async function loginHandler(
 	if (!user || !isValid) {
 		return res.status(StatusCodes.UNAUTHORIZED).send('Invalid email or password');
 	}
-
-	console.log({ user });
 
 	const payload = omit(user.toJSON(), ['password']);
 	const jwt = signJwt(payload);

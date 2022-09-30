@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+
 import omit from '../../utils/omit';
-import { getAllUsers, getUserById } from './user.service';
+import { UpdateUserBody, UpdateUserParams } from './user.schema';
+import { getAllUsers, getUserById, updateUser } from './user.service';
 
 export async function getUserHandler(req: Request, res: Response) {
 	const { userId } = req.params;
@@ -28,3 +30,21 @@ export async function getAllUsersHandler(req: Request, res: Response) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
 	}
 }
+
+export const updateUserHandler = async (
+	req: Request<UpdateUserParams, Record<string, unknown>, UpdateUserBody>,
+	res: Response
+) => {
+	const { userId } = req.params;
+
+	if (userId !== res.locals.user._id) {
+		return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized');
+	}
+
+	try {
+		const updatedUser = await updateUser(userId, { ...req.body });
+		return res.status(StatusCodes.OK).json(updatedUser);
+	} catch (e) {
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
+	}
+};

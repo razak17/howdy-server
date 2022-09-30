@@ -36,7 +36,7 @@ export class User extends TimeStamps {
 	public workplace: string;
 
 	@prop()
-	public relationship: string;
+	public relationshipStatus: string;
 
 	@prop({ default: false })
 	public isAdmin: boolean;

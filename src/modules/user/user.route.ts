@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import express from 'express';
-import { getAllUsersHandler, getUserHandler } from './user.controller';
+import { getAllUsersHandler, getUserHandler, updateUserHandler } from './user.controller';
+import requireUser from '../../middleware/requireUser';
 
 const router = express.Router();
 
@@ -14,10 +15,10 @@ router.get('/:userId', getUserHandler);
 // Get All Users
 router.get('/', getAllUsersHandler);
 
-// Update Users
-router.put('/:userId', helloController);
+// Update User
+router.put('/:userId', requireUser, updateUserHandler);
 
-// Delete Users
+// Delete User
 router.put('/:userId', helloController);
 
 // Follow

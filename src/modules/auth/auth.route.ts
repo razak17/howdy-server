@@ -1,7 +1,8 @@
 import express from 'express';
 import { processRequestBody } from 'zod-express-middleware';
+import { registerSchema } from '../user/user.schema';
 import { loginHandler, registerHandler } from './auth.controller';
-import { loginSchema, registerSchema } from './auth.schema';
+import { loginSchema } from './auth.schema';
 
 const router = express.Router();
 
