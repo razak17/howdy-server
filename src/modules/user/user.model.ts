@@ -3,16 +3,19 @@ import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
 export class Post extends TimeStamps {
 	@prop({ required: true })
-	public username: string;
-
-	@prop({ required: true })
-	public password: string;
-
-	@prop({ required: true })
 	public firstName: string;
 
 	@prop({ required: true })
 	public lastName: string;
+
+	@prop({ required: true })
+	public username: string;
+
+	@prop({ required: true })
+	public email: string;
+
+	@prop({ required: true })
+	public password: string;
 
 	@prop({ required: true })
 	public about: string;
