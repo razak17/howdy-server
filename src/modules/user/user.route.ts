@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import express from 'express';
 import {
 	deleteUserHandler,
@@ -11,10 +10,6 @@ import {
 import requireUser from '../../middleware/requireUser';
 
 const router = express.Router();
-
-export const helloController = (req: Request, res: Response) => {
-	res.send({ status: 'ok' });
-};
 
 // Get User by ID
 router.get('/:userId', getUserHandler);
