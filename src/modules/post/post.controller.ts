@@ -27,7 +27,7 @@ export const createPostHandler = async (
 	const { _id: userId } = res.locals.user;
 
 	try {
-		const newPost = await createPost({ ...req.body }, userId);
+		const newPost = await createPost({ post: { ...req.body }, userId });
 		return res.status(StatusCodes.OK).json(newPost);
 	} catch (e) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
@@ -64,7 +64,7 @@ export const updatePostHandler = async (
 		return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized.');
 	}
 
-	const updatedPost = await updatePost(postId, { ...req.body });
+	const updatedPost = await updatePost({ postId, update: { ...req.body } });
 	return res.status(StatusCodes.OK).json(updatedPost);
 };
 
@@ -104,7 +104,7 @@ export const likePostHandler = async (
 	if (String(post.userId) !== String(userId)) {
 		return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized.');
 	}
-	await likePost(userId, postId);
+	await likePost({ userId, postId });
 	return res.status(StatusCodes.OK).send('Post liked.');
 };
 
@@ -124,7 +124,7 @@ export const dislikePostHandler = async (
 	if (String(post.userId) !== String(userId)) {
 		return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized.');
 	}
-	await dislikePost(userId, postId);
+	await dislikePost({ userId, postId });
 	return res.status(StatusCodes.OK).send('Post disliked.');
 };
 

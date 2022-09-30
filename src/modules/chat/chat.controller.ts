@@ -10,7 +10,7 @@ export const createChatHandler = async (
 	const { _id: userId } = res.locals.user;
 	const { receiverId } = req.body;
 	try {
-		const newChat = await createChat(userId, receiverId);
+		const newChat = await createChat({ userId, receiverId });
 		return res.status(StatusCodes.OK).json(newChat);
 	} catch (e) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
@@ -36,7 +36,7 @@ export const findChatHandler = async (
 ) => {
 	const { firstParticipantId, secondParticipantId } = req.params;
 	try {
-		const chats = await findChat(firstParticipantId, secondParticipantId);
+		const chats = await findChat({ firstParticipantId, secondParticipantId });
 		return res.status(StatusCodes.OK).json(chats);
 	} catch (e) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);

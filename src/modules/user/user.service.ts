@@ -21,10 +21,13 @@ export async function getAllUsers() {
 	return await UserModel.find();
 }
 
-export async function updateUser(
-	userId: string,
-	update: Omit<User, 'password' | 'isAdmin' | 'followers' | 'following'>
-) {
+export async function updateUser({
+	userId,
+	update
+}: {
+	userId: string;
+	update: Omit<User, 'password' | 'isAdmin' | 'followers' | 'following'>;
+}) {
 	return await UserModel.findByIdAndUpdate(userId, { $set: update }, { new: true });
 }
 
@@ -32,7 +35,7 @@ export async function deleteUser(userId: string) {
 	return await UserModel.findByIdAndDelete(userId);
 }
 
-export async function follow(userId: string, id: string) {
+export async function follow({ userId, id }: { userId: string; id: string }) {
 	await UserModel.findByIdAndUpdate(userId, {
 		$addToSet: { following: id }
 	});
@@ -40,7 +43,7 @@ export async function follow(userId: string, id: string) {
 	return;
 }
 
-export async function unfollow(userId: string, id: string) {
+export async function unfollow({ userId, id }: { userId: string; id: string }) {
 	await UserModel.findByIdAndUpdate(userId, {
 		$pull: { following: id }
 	});

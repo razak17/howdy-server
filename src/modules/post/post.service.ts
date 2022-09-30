@@ -2,39 +2,40 @@ import mongoose from 'mongoose';
 import { UserModel } from '../user/user.model';
 import { Post, PostModel } from './post.model';
 
-export const createPost = async (
-	post: Omit<Post, 'userId' | 'likes' | 'dislikes'>,
-	userId: string
-) => {
+export const createPost = async ({
+	post,
+	userId
+}: {
+	post: Omit<Post, 'userId' | 'likes' | 'dislikes'>;
+	userId: string;
+}) => {
 	const newPost = new PostModel({ ...post, userId });
 	return await newPost.save();
 };
 
-export const findPostById = async (PostId: string) => {
-	return await PostModel.findById(PostId);
-};
+export const findPostById = async (PostId: string) => await PostModel.findById(PostId);
 
-export const updatePost = async (
-	postId: string,
-	update: Omit<Post, 'owner' | 'likes' | 'dislikes' | 'userId'>
-) => {
+export const updatePost = async ({
+	postId,
+	update
+}: {
+	postId: string;
+	update: Omit<Post, 'owner' | 'likes' | 'dislikes' | 'userId'>;
+}) => {
 	const updatedPost = await PostModel.findByIdAndUpdate(postId, { $set: update }, { new: true });
-
 	return updatedPost;
 };
 
-export const deletePost = async (postId: string) => {
-	return PostModel.findByIdAndDelete(postId);
-};
+export const deletePost = async (postId: string) => PostModel.findByIdAndDelete(postId);
 
-export const likePost = async (userId: string, postId: string) => {
+export const likePost = async ({ userId, postId }: { userId: string; postId: string }) => {
 	return await PostModel.findByIdAndUpdate(postId, {
 		$addToSet: { likes: userId },
 		$pull: { dislikes: userId }
 	});
 };
 
-export const dislikePost = async (userId: string, postId: string) => {
+export const dislikePost = async ({ userId, postId }: { userId: string; postId: string }) => {
 	return await PostModel.findByIdAndUpdate(postId, {
 		$addToSet: { dislikes: userId },
 		$pull: { likes: userId }

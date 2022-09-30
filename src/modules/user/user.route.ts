@@ -11,6 +11,11 @@ import requireUser from '../../middleware/requireUser';
 
 const router = express.Router();
 
+// Get current user
+router.get('/me', requireUser, (_, res) => {
+	return res.send(res.locals.user);
+});
+
 // Get User by ID
 router.get('/:userId', getUserHandler);
 

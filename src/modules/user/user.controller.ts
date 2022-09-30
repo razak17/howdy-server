@@ -59,7 +59,7 @@ export const updateUserHandler = async (
 	}
 
 	try {
-		const updatedUser = await updateUser(userId, { ...req.body });
+		const updatedUser = await updateUser({ userId, update: { ...req.body } });
 		return res.status(StatusCodes.OK).json(updatedUser);
 	} catch (e) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
@@ -96,7 +96,7 @@ export const followHandler = async (
 	}
 
 	try {
-		await follow(userId, id);
+		await follow({ userId, id });
 		return res.status(StatusCodes.OK).send('Followed successfully.');
 	} catch (e) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
@@ -114,7 +114,7 @@ export const unfollowHandler = async (
 	}
 
 	try {
-		await unfollow(userId, id);
+		await unfollow({ userId, id });
 		return res.status(StatusCodes.OK).send('Unfollowed successfully.');
 	} catch (e) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);

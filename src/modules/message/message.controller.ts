@@ -11,7 +11,7 @@ export const createMessageHandler = async (
 	const { chatId, description, receiverId } = req.body;
 
 	try {
-		const newMessage = await createMessage(chatId, description, userId, receiverId);
+		const newMessage = await createMessage({ chatId, description, senderId: userId, receiverId });
 		return res.status(StatusCodes.OK).json(newMessage);
 	} catch (e) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
