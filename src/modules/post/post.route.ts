@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import { processRequestBody } from 'zod-express-middleware';
 import requireUser from '../../middleware/requireUser';
 import {
@@ -11,10 +11,6 @@ import {
 	getFeedHandler
 } from './post.controller';
 import { createPostSchema, updatePostSchema } from './post.schema';
-
-export const helloController = (req: Request, res: Response) => {
-	res.send({ status: 'ok' });
-};
 
 const router = express.Router();
 
