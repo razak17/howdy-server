@@ -1,8 +1,13 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { PostModel } from './post.model';
-import { CreatePostBody, GetPostParams, UpdatePostBody, UpdatePostParams } from './post.schema';
-import { createPost, findPostById, updatePost } from './post.service';
+import {
+	CreatePostBody,
+	deletePostParams,
+	GetPostParams,
+	UpdatePostBody,
+	UpdatePostParams
+} from './post.schema';
+import { createPost, deletePost, findPostById, updatePost } from './post.service';
 
 export const createPostHandler = async (
 	req: Request<Record<string, unknown>, Record<string, unknown>, CreatePostBody>,
@@ -37,10 +42,10 @@ export const updatePostHandler = async (
 	const { _id: userId } = res.locals.user;
 	const { postId } = req.params;
 
-	const post = await PostModel.findById(postId);
+	const post = await findPostById(postId);
 
 	if (!post) {
-		return res.status(StatusCodes.NOT_FOUND).send('post not found.');
+		return res.status(StatusCodes.NOT_FOUND).send('Post not found.');
 	}
 
 	if (String(post.userId) !== String(userId)) {
@@ -49,4 +54,24 @@ export const updatePostHandler = async (
 
 	const updatedPost = await updatePost(postId, { ...req.body });
 	return res.status(StatusCodes.OK).json(updatedPost);
+};
+
+export const deletePostHandler = async (
+	req: Request<deletePostParams, Record<string, unknown>, Record<string, unknown>>,
+	res: Response
+) => {
+	const { _id: userId } = res.locals.user;
+	const { postId } = req.params;
+
+	const post = await findPostById(postId);
+
+	if (!post) {
+		return res.status(StatusCodes.NOT_FOUND).send('Post not found.');
+	}
+
+	if (String(post.userId) !== String(userId)) {
+		return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized.');
+	}
+	await deletePost(postId);
+	return res.status(StatusCodes.OK).send('Post deleted.');
 };

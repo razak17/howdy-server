@@ -17,3 +17,7 @@ export const updatePost = async (
 
 	return updatedPost;
 };
+
+export async function deletePost(postId: string) {
+	return PostModel.findByIdAndDelete(postId);
+}

@@ -1,7 +1,12 @@
 import express, { Request, Response } from 'express';
 import { processRequestBody } from 'zod-express-middleware';
 import requireUser from '../../middleware/requireUser';
-import { createPostHandler, getPostHandler, updatePostHandler } from './post.controller';
+import {
+	createPostHandler,
+	getPostHandler,
+	updatePostHandler,
+	deletePostHandler
+} from './post.controller';
 import { createPostSchema, updatePostSchema } from './post.schema';
 
 export const helloController = (req: Request, res: Response) => {
@@ -20,7 +25,7 @@ router.get('/:postId', getPostHandler);
 router.put('/:postId', requireUser, processRequestBody(updatePostSchema.body), updatePostHandler);
 
 // Delete Post
-router.delete('/:postId', requireUser, helloController);
+router.delete('/:postId', requireUser, deletePostHandler);
 
 // Like Post
 router.put('/:postId/like', requireUser, helloController);

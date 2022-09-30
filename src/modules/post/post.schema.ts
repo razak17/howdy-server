@@ -26,3 +26,4 @@ export type CreatePostBody = TypeOf<typeof createPostSchema.body>;
 export type UpdatePostBody = TypeOf<typeof updatePostSchema.body>;
 export type UpdatePostParams = TypeOf<typeof updatePostSchema.params>;
 export type GetPostParams = TypeOf<typeof updatePostSchema.params>;
+export type deletePostParams = TypeOf<typeof updatePostSchema.params>;
