@@ -53,3 +53,14 @@ export async function loginHandler(
 
 	return res.status(StatusCodes.OK).send(jwt);
 }
+
+export async function logoutHandler(_: Request, res: Response) {
+	const user = res.locals.user;
+
+	if (!user) {
+		return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized.');
+	}
+	res.clearCookie(COOKIE_NAME);
+	res.end();
+	return res.status(StatusCodes.OK).send('Logged out.');
+}
