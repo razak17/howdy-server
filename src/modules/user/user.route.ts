@@ -3,7 +3,7 @@ import express from 'express';
 
 const router = express.Router();
 
-const helloController = (req: Request, res: Response) => {
+export const helloController = (req: Request, res: Response) => {
 	res.send({ status: 'ok' });
 };
 
