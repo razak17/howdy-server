@@ -8,3 +8,7 @@ export async function createUser(
 	const newUser = new UserModel({ ...user, password: hash });
 	return await newUser.save();
 }
+
+export async function findUserByEmail(email: User['email']) {
+	return await UserModel.findOne({ email });
+}
