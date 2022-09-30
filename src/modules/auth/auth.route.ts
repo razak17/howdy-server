@@ -1,8 +1,7 @@
 import express from 'express';
 import { processRequestBody } from 'zod-express-middleware';
-import { helloController } from '../user/user.route';
-import { registerHandler } from './auth.controller';
-import { registerSchema } from './auth.schema';
+import { loginHandler, registerHandler } from './auth.controller';
+import { loginSchema, registerSchema } from './auth.schema';
 
 const router = express.Router();
 
@@ -10,6 +9,6 @@ const router = express.Router();
 router.post('/register', processRequestBody(registerSchema.body), registerHandler);
 
 // Login
-router.post('/login', helloController);
+router.post('/login', processRequestBody(loginSchema.body), loginHandler);
 
 export default router;
