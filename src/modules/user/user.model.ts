@@ -8,10 +8,10 @@ export class User extends TimeStamps {
 	@prop({ required: true })
 	public lastName: string;
 
-	@prop({ required: true })
+	@prop({ required: true, unique: true })
 	public username: string;
 
-	@prop({ required: true })
+	@prop({ required: true, unique: true })
 	public email: string;
 
 	@prop({ required: true })
