@@ -38,3 +38,10 @@ export async function follow(userId: string, id: string) {
 	});
 	return await UserModel.findByIdAndUpdate(id, { $addToSet: { followers: userId } });
 }
+
+export async function unfollow(userId: string, id: string) {
+	await UserModel.findByIdAndUpdate(userId, {
+		$pull: { following: id }
+	});
+	return await UserModel.findByIdAndUpdate(id, { $pull: { followers: userId } });
+}

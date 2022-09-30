@@ -5,10 +5,11 @@ import omit from '../../utils/omit';
 import {
 	DeleteUserParams,
 	FollowUserParams,
+	UnfollowUserParams,
 	UpdateUserBody,
 	UpdateUserParams
 } from './user.schema';
-import { deleteUser, follow, getAllUsers, getUserById, updateUser } from './user.service';
+import { deleteUser, follow, getAllUsers, getUserById, unfollow, updateUser } from './user.service';
 
 export async function getUserHandler(req: Request, res: Response) {
 	const { userId } = req.params;
@@ -85,6 +86,24 @@ export const followHandler = async (
 	try {
 		await follow(userId, id);
 		return res.status(StatusCodes.OK).send('Followed successfully.');
+	} catch (e) {
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
+	}
+};
+
+export const unfollowHandler = async (
+	req: Request<UnfollowUserParams, Record<string, unknown>, Record<string, unknown>>,
+	res: Response
+) => {
+	const { id } = req.params;
+	const userId = res.locals.user._id;
+	if (id === userId) {
+		return res.status(StatusCodes.FORBIDDEN).send('Cannot unfollow your own account.');
+	}
+
+	try {
+		await unfollow(userId, id);
+		return res.status(StatusCodes.OK).send('Unfollowed successfully.');
 	} catch (e) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
 	}

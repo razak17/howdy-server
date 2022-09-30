@@ -5,6 +5,7 @@ import {
 	followHandler,
 	getAllUsersHandler,
 	getUserHandler,
+	unfollowHandler,
 	updateUserHandler
 } from './user.controller';
 import requireUser from '../../middleware/requireUser';
@@ -31,6 +32,6 @@ router.delete('/:userId', requireUser, deleteUserHandler);
 router.put('/:id/follow', requireUser, followHandler);
 
 // Unfollow
-router.put('/:id/unfollow', helloController);
+router.put('/:id/unfollow', requireUser, unfollowHandler);
 
 export default router;
