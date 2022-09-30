@@ -1,4 +1,17 @@
 import { User, UserModel } from './user.model';
+import argon2 from 'argon2';
+
+export async function createUser(
+	user: Pick<User, 'firstName' | 'lastName' | 'username' | 'email' | 'password'>
+) {
+	const hash = await argon2.hash(user.password);
+	const newUser = new UserModel({ ...user, password: hash });
+	return await newUser.save();
+}
+
+export async function findUserByEmail(email: User['email']) {
+	return await UserModel.findOne({ email });
+}
 
 export async function getUserById(userId: string) {
 	return await UserModel.findById(userId);

@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import argon2 from 'argon2';
 
 import { LoginBody } from './auth.schema';
-import { createUser, findUserByEmail } from './auth.service';
+import { createUser, findUserByEmail } from '../user/user.service';
 import omit from '../../utils/omit';
 import { signJwt } from './auth.utils';
 import { RegisterBody } from '../user/user.schema';
