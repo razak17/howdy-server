@@ -1,18 +1,19 @@
 import express from 'express';
 import cors from 'cors';
-import cookieParser from "cookie-parser";
+import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 dotenv.config();
 
 import { connect } from './utils/database';
 import userRoute from './modules/user/user.route';
 import authRoute from './modules/auth/auth.route';
+import deserializeUser from './middleware/deserializeUser';
 
 const main = async () => {
 	const port = process.env.PORT;
 	const app = express();
 
-  app.use(cookieParser());
+	app.use(cookieParser());
 	app.use(express.json());
 	app.use(
 		cors({
@@ -25,6 +26,7 @@ const main = async () => {
 		res.send({ status: 'ok' });
 	});
 
+	app.use(deserializeUser);
 	app.use('/api/v1/users', userRoute);
 	app.use('/api/v1/auth', authRoute);
 
