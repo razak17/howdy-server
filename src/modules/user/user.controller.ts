@@ -90,6 +90,7 @@ export const followHandler = async (
 ) => {
 	const { id } = req.params;
 	const userId = res.locals.user._id;
+
 	if (id === userId) {
 		return res.status(StatusCodes.FORBIDDEN).send('Cannot follow your own account.');
 	}

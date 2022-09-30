@@ -5,11 +5,20 @@ import {
 	deletePostParams,
 	dislikePostParams,
 	GetPostParams,
+	GetTimelineParams,
 	likePostParams,
 	UpdatePostBody,
 	UpdatePostParams
 } from './post.schema';
-import { createPost, deletePost, dislikePost, findPostById, likePost, updatePost } from './post.service';
+import {
+	createPost,
+	deletePost,
+	dislikePost,
+	findPostById,
+	getFeed,
+	likePost,
+	updatePost
+} from './post.service';
 
 export const createPostHandler = async (
 	req: Request<Record<string, unknown>, Record<string, unknown>, CreatePostBody>,
@@ -25,10 +34,10 @@ export const createPostHandler = async (
 	}
 };
 
-export async function getPostHandler(
+export const getPostHandler = async (
 	req: Request<GetPostParams, Record<string, unknown>, Record<string, unknown>>,
 	res: Response
-) {
+) => {
 	const { postId } = req.params;
 	try {
 		const post = await findPostById(postId);
@@ -36,7 +45,7 @@ export async function getPostHandler(
 	} catch (e) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
 	}
-}
+};
 export const updatePostHandler = async (
 	req: Request<UpdatePostParams, Record<string, unknown>, UpdatePostBody>,
 	res: Response
@@ -114,6 +123,20 @@ export const dislikePostHandler = async (
 	if (String(post.userId) !== String(userId)) {
 		return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized.');
 	}
-  await dislikePost(userId, postId);
+	await dislikePost(userId, postId);
 	return res.status(StatusCodes.OK).send('Post disliked.');
+};
+
+export const getFeedHandler = async (
+	req: Request<GetTimelineParams, Record<string, unknown>, Record<string, unknown>>,
+	res: Response
+) => {
+	const { userId } = req.params;
+
+	try {
+		const feed = await getFeed(userId);
+		return res.status(StatusCodes.OK).json(feed);
+	} catch (e) {
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
+	}
 };

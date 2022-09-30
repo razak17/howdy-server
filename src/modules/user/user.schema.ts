@@ -15,12 +15,6 @@ const userSchema = {
 	}).email('Not a valid email')
 };
 
-const followParams = {
-	params: object({
-		id: string()
-	})
-};
-
 export const registerSchema = {
 	body: object({
 		...userSchema,
@@ -57,11 +51,9 @@ export const updateUserSchema = {
 };
 
 export const followUserSchema = {
-	...followParams
-};
-
-export const unfollowUserSchema = {
-	...followParams
+	params: object({
+		id: string()
+	})
 };
 
 export type RegisterBody = TypeOf<typeof registerSchema.body>;
@@ -70,4 +62,4 @@ export type UpdateUserParams = TypeOf<typeof updateUserSchema.params>;
 export type getUserParams = TypeOf<typeof updateUserSchema.params>;
 export type DeleteUserParams = TypeOf<typeof updateUserSchema.params>;
 export type FollowUserParams = TypeOf<typeof followUserSchema.params>;
-export type UnfollowUserParams = TypeOf<typeof unfollowUserSchema.params>;
+export type UnfollowUserParams = TypeOf<typeof followUserSchema.params>;

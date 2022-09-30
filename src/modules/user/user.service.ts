@@ -36,12 +36,14 @@ export async function follow(userId: string, id: string) {
 	await UserModel.findByIdAndUpdate(userId, {
 		$addToSet: { following: id }
 	});
-	return await UserModel.findByIdAndUpdate(id, { $addToSet: { followers: userId } });
+	await UserModel.findByIdAndUpdate(id, { $addToSet: { followers: userId } });
+	return;
 }
 
 export async function unfollow(userId: string, id: string) {
 	await UserModel.findByIdAndUpdate(userId, {
 		$pull: { following: id }
 	});
-	return await UserModel.findByIdAndUpdate(id, { $pull: { followers: userId } });
+	await UserModel.findByIdAndUpdate(id, { $pull: { followers: userId } });
+	return;
 }

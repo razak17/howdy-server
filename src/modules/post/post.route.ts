@@ -7,7 +7,8 @@ import {
 	updatePostHandler,
 	deletePostHandler,
 	likePostHandler,
-	dislikePostHandler
+	dislikePostHandler,
+	getFeedHandler
 } from './post.controller';
 import { createPostSchema, updatePostSchema } from './post.schema';
 
@@ -35,7 +36,7 @@ router.put('/:postId/like', requireUser, likePostHandler);
 // Dislike Post
 router.put('/:postId/dislike', requireUser, dislikePostHandler);
 
-// Get User Post Timeline
-router.get('/:userId/timeline', helloController);
+// Get User Feed
+router.get('/:userId/feed', requireUser, getFeedHandler);
 
 export default router;
