@@ -46,6 +46,7 @@ export const getPostHandler = async (
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
 	}
 };
+
 export const updatePostHandler = async (
 	req: Request<UpdatePostParams, Record<string, unknown>, UpdatePostBody>,
 	res: Response

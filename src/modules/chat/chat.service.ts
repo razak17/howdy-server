@@ -5,3 +5,9 @@ export const createChat = async (userId: string, receiverId: string) => {
 	const newMessage = new ChatModel({ creatorId: userId, members });
 	return await newMessage.save();
 };
+
+export const getUserChats = async (userId: string) => {
+	return await ChatModel.find({
+		members: { $in: [userId] }
+	});
+};

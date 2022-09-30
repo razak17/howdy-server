@@ -6,4 +6,11 @@ export const createChatSchema = {
 	})
 };
 
+export const getUserChatsSchema = {
+	params: object({
+		userId: string()
+	})
+};
+
 export type CreateChatBody = TypeOf<typeof createChatSchema.body>;
+export type GetUserChatsParams = TypeOf<typeof getUserChatsSchema.params>;
