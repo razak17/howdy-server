@@ -27,3 +27,8 @@ export async function updateUser(
 ) {
 	return await UserModel.findByIdAndUpdate(userId, { $set: update }, { new: true });
 }
+
+export async function deleteUser(userId: string) {
+  return await UserModel.findByIdAndDelete(userId);
+}
+

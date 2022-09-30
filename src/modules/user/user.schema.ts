@@ -58,6 +58,11 @@ export const updateUserSchema = {
 	...userParams
 };
 
+export const deleteUserSchema = {
+	...userParams
+};
+
 export type RegisterBody = TypeOf<typeof registerSchema.body>;
 export type UpdateUserBody = TypeOf<typeof updateUserSchema.body>;
 export type UpdateUserParams = TypeOf<typeof updateUserSchema.params>;
+export type DeleteUserParams = TypeOf<typeof deleteUserSchema.params>;

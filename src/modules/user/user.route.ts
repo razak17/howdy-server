@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
 import express from 'express';
-import { getAllUsersHandler, getUserHandler, updateUserHandler } from './user.controller';
+import {
+	deleteUserHandler,
+	getAllUsersHandler,
+	getUserHandler,
+	updateUserHandler
+} from './user.controller';
 import requireUser from '../../middleware/requireUser';
 
 const router = express.Router();
@@ -19,7 +24,7 @@ router.get('/', getAllUsersHandler);
 router.put('/:userId', requireUser, updateUserHandler);
 
 // Delete User
-router.put('/:userId', helloController);
+router.delete('/:userId', requireUser, deleteUserHandler);
 
 // Follow
 router.put('/:userId/follow', helloController);
