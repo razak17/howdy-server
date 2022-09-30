@@ -1,12 +1,11 @@
 import { TypeOf, object, string } from 'zod';
 
-const createMessageSchema = {
+export const createMessageSchema = {
 	body: object({
-		messageId: string(),
-		description: string()
+		description: string({ required_error: 'description is required' })
 	}),
 	params: object({
-		videoId: string()
+		messageId: string()
 	})
 };
 

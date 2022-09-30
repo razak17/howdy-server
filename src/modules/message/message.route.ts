@@ -1,6 +1,10 @@
 import express, { Request, Response } from 'express';
 import { processRequestBody } from 'zod-express-middleware';
 
+import requireUser from '../../middleware/requireUser';
+import { createMessageHandler } from './message.controller';
+import { createMessageSchema } from './message.schema';
+
 const router = express.Router();
 
 export const helloController = (req: Request, res: Response) => {
@@ -8,9 +12,9 @@ export const helloController = (req: Request, res: Response) => {
 };
 
 // Create new message
-router.post('/', helloController);
+router.post('/', requireUser, processRequestBody(createMessageSchema.body), createMessageHandler);
 
 // Get message
-router.get('/:chatId', helloController);
+router.get('/:messageId', requireUser, helloController);
 
 export default router;
