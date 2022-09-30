@@ -3,12 +3,13 @@ import { StatusCodes } from 'http-status-codes';
 import {
 	CreatePostBody,
 	deletePostParams,
+	dislikePostParams,
 	GetPostParams,
 	likePostParams,
 	UpdatePostBody,
 	UpdatePostParams
 } from './post.schema';
-import { createPost, deletePost, findPostById, likePost, updatePost } from './post.service';
+import { createPost, deletePost, dislikePost, findPostById, likePost, updatePost } from './post.service';
 
 export const createPostHandler = async (
 	req: Request<Record<string, unknown>, Record<string, unknown>, CreatePostBody>,
@@ -95,4 +96,24 @@ export const likePostHandler = async (
 	}
 	await likePost(userId, postId);
 	return res.status(StatusCodes.OK).send('Post liked.');
+};
+
+export const dislikePostHandler = async (
+	req: Request<dislikePostParams, Record<string, unknown>, Record<string, unknown>>,
+	res: Response
+) => {
+	const { _id: userId } = res.locals.user;
+	const { postId } = req.params;
+
+	const post = await findPostById(postId);
+
+	if (!post) {
+		return res.status(StatusCodes.NOT_FOUND).send('Post not found.');
+	}
+
+	if (String(post.userId) !== String(userId)) {
+		return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized.');
+	}
+  await dislikePost(userId, postId);
+	return res.status(StatusCodes.OK).send('Post disliked.');
 };

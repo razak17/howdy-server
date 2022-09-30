@@ -28,3 +28,4 @@ export type UpdatePostParams = TypeOf<typeof updatePostSchema.params>;
 export type GetPostParams = TypeOf<typeof updatePostSchema.params>;
 export type deletePostParams = TypeOf<typeof updatePostSchema.params>;
 export type likePostParams = TypeOf<typeof updatePostSchema.params>;
+export type dislikePostParams = TypeOf<typeof updatePostSchema.params>;

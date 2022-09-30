@@ -1,6 +1,9 @@
 import { Post, PostModel } from './post.model';
 
-export const createPost = async (post: Omit<Post, 'userId' | 'likes'>, userId: string) => {
+export const createPost = async (
+	post: Omit<Post, 'userId' | 'likes' | 'dislikes'>,
+	userId: string
+) => {
 	const newPost = new PostModel({ ...post, userId });
 	return await newPost.save();
 };
@@ -24,6 +27,14 @@ export async function deletePost(postId: string) {
 
 export async function likePost(userId: string, postId: string) {
 	return await PostModel.findByIdAndUpdate(postId, {
-		$addToSet: { likes: userId }
+		$addToSet: { likes: userId },
+		$pull: { dislikes: userId }
+	});
+}
+
+export async function dislikePost(userId: string, postId: string) {
+	return await PostModel.findByIdAndUpdate(postId, {
+		$addToSet: { dislikes: userId },
+		$pull: { likes: userId }
 	});
 }
