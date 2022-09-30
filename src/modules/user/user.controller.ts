@@ -5,13 +5,17 @@ import omit from '../../utils/omit';
 import {
 	DeleteUserParams,
 	FollowUserParams,
+	getUserParams,
 	UnfollowUserParams,
 	UpdateUserBody,
 	UpdateUserParams
 } from './user.schema';
 import { deleteUser, follow, getAllUsers, getUserById, unfollow, updateUser } from './user.service';
 
-export async function getUserHandler(req: Request, res: Response) {
+export async function getUserHandler(
+	req: Request<getUserParams, Record<string, unknown>, Record<string, unknown>>,
+	res: Response
+) {
 	const { userId } = req.params;
 	try {
 		const user = await getUserById(userId);
