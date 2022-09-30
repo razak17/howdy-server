@@ -39,6 +39,8 @@ export async function loginHandler(
 		return res.status(StatusCodes.UNAUTHORIZED).send('Invalid email or password');
 	}
 
+	console.log({ user });
+
 	const payload = omit(user.toJSON(), ['password']);
 	const jwt = signJwt(payload);
 
