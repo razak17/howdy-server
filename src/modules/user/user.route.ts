@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import express from 'express';
+import { getUserHandler } from './user.controller';
 
 const router = express.Router();
 
@@ -8,21 +9,21 @@ export const helloController = (req: Request, res: Response) => {
 };
 
 // Get User by ID
-router.get('/:id', helloController);
+router.get('/:userId', getUserHandler);
 
 // Get All Users
 router.get('/', helloController);
 
 // Update Users
-router.put('/:id', helloController);
+router.put('/:userId', helloController);
 
 // Delete Users
-router.put('/:id', helloController);
+router.put('/:userId', helloController);
 
 // Follow
-router.put('/:id/follow', helloController);
+router.put('/:userId/follow', helloController);
 
 // Unfollow
-router.put('/:id/unfollow', helloController);
+router.put('/:userId/unfollow', helloController);
 
 export default router;
