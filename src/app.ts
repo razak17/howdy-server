@@ -9,6 +9,7 @@ import userRoute from './modules/user/user.route';
 import authRoute from './modules/auth/auth.route';
 import postRoute from './modules/post/post.route';
 import messageRoute from './modules/message/message.route';
+import chatRoute from './modules/chat/chat.route';
 import deserializeUser from './middleware/deserializeUser';
 
 const main = async () => {
@@ -33,6 +34,7 @@ const main = async () => {
 	app.use('/api/v1/auth', authRoute);
 	app.use('/api/v1/posts', postRoute);
 	app.use('/api/v1/messages', messageRoute);
+	app.use('/api/v1/chats', chatRoute);
 
 	app.listen(port, async () => {
 		console.log(`server started on http://localhost:${port}`);
