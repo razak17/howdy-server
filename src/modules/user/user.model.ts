@@ -1,7 +1,7 @@
 import { getModelForClass, prop } from '@typegoose/typegoose';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
-export class Post extends TimeStamps {
+export class User extends TimeStamps {
 	@prop({ required: true })
 	public firstName: string;
 
@@ -17,25 +17,25 @@ export class Post extends TimeStamps {
 	@prop({ required: true })
 	public password: string;
 
-	@prop({ required: true })
+	@prop()
 	public about: string;
 
-	@prop({ required: true })
+	@prop()
 	public profilePicture: string;
 
-	@prop({ required: true })
+	@prop()
 	public coverPicture: string;
 
-	@prop({ required: true })
+	@prop()
 	public city: string;
 
-	@prop({ required: true })
+	@prop()
 	public country: string;
 
-	@prop({ required: true })
+	@prop()
 	public workplace: string;
 
-	@prop({ required: true })
+	@prop()
 	public relationship: string;
 
 	@prop({ default: false })
@@ -48,6 +48,6 @@ export class Post extends TimeStamps {
 	public following: string[];
 }
 
-export const PostModel = getModelForClass(Post, {
+export const UserModel = getModelForClass(User, {
 	schemaOptions: { timestamps: true }
 });

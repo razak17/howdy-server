@@ -7,4 +7,4 @@
   yarn add -D @typegoose/typegoose @types/cors @types/express @types/node ts-node-dev typescript
 
 - Main Dependencies
-  yarn add body-parser express cors mongoose dotenv zod zod-express-middleware http-status-codes pino pino-pretty dayjs multer path jsonwebtoken
+  yarn add argon2 body-parser express cors mongoose dotenv zod zod-express-middleware http-status-codes pino pino-pretty dayjs multer path jsonwebtoken
