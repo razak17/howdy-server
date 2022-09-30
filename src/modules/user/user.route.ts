@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import express from 'express';
-import { getUserHandler } from './user.controller';
+import { getAllUsersHandler, getUserHandler } from './user.controller';
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ export const helloController = (req: Request, res: Response) => {
 router.get('/:userId', getUserHandler);
 
 // Get All Users
-router.get('/', helloController);
+router.get('/', getAllUsersHandler);
 
 // Update Users
 router.put('/:userId', helloController);
