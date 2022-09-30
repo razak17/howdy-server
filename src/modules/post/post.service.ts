@@ -10,9 +10,9 @@ export const createPost = async (
 	return await newPost.save();
 };
 
-export async function findPostById(PostId: string) {
+export const findPostById = async (PostId: string) => {
 	return await PostModel.findById(PostId);
-}
+};
 
 export const updatePost = async (
 	postId: string,
@@ -23,9 +23,9 @@ export const updatePost = async (
 	return updatedPost;
 };
 
-export async function deletePost(postId: string) {
+export const deletePost = async (postId: string) => {
 	return PostModel.findByIdAndDelete(postId);
-}
+};
 
 export const likePost = async (userId: string, postId: string) => {
 	return await PostModel.findByIdAndUpdate(postId, {
@@ -34,12 +34,12 @@ export const likePost = async (userId: string, postId: string) => {
 	});
 };
 
-export async function dislikePost(userId: string, postId: string) {
+export const dislikePost = async (userId: string, postId: string) => {
 	return await PostModel.findByIdAndUpdate(postId, {
 		$addToSet: { dislikes: userId },
 		$pull: { likes: userId }
 	});
-}
+};
 
 export const getRandomPosts = async (count = 20) => {
 	return await PostModel.find().limit(count);

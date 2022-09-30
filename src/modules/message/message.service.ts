@@ -4,3 +4,7 @@ export const createMessage = async (description: Message['description'], senderI
 	const newMessage = new MessageModel({ description, senderId });
 	return newMessage;
 };
+
+export const findMessagesByChatId = async (chatId: string) => {
+	return await MessageModel.find({ chatId });
+};

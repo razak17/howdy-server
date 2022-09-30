@@ -5,9 +5,10 @@ export const createMessageSchema = {
 		description: string({ required_error: 'description is required' })
 	}),
 	params: object({
-		messageId: string()
+		chatId: string()
 	})
 };
 
 export type CreateMessageBody = TypeOf<typeof createMessageSchema.body>;
 export type CreateMessageParams = TypeOf<typeof createMessageSchema.params>;
+export type getMessagesParams = TypeOf<typeof createMessageSchema.params>;
