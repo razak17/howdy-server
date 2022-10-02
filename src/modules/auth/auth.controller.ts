@@ -62,5 +62,4 @@ export async function logoutHandler(_: Request, res: Response) {
 	}
 	res.clearCookie(COOKIE_NAME);
 	res.end();
-	return res.status(StatusCodes.OK).send('Logged out.');
 }
