@@ -20,7 +20,7 @@ export async function registerHandler(
 	} catch (err) {
 		console.log(err);
 		if (err.code === 11000) {
-			return res.status(StatusCodes.CONFLICT).send('User already exists');
+			return res.status(StatusCodes.CONFLICT).send('username or email is already taken');
 		}
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err.message);
 	}
