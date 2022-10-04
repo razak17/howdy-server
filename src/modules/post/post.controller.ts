@@ -114,10 +114,8 @@ export const likePostHandler = async (
 		return res.status(StatusCodes.NOT_FOUND).send('Post not found.');
 	}
 
-	if (String(post.userId) !== String(userId)) {
-		return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized.');
-	}
 	await likePost({ userId, postId });
+
 	return res.status(StatusCodes.OK).send('Post liked.');
 };
 
@@ -132,10 +130,6 @@ export const dislikePostHandler = async (
 
 	if (!post) {
 		return res.status(StatusCodes.NOT_FOUND).send('Post not found.');
-	}
-
-	if (String(post.userId) !== String(userId)) {
-		return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized.');
 	}
 	await dislikePost({ userId, postId });
 	return res.status(StatusCodes.OK).send('Post disliked.');
