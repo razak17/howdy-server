@@ -43,7 +43,8 @@ export const dislikePost = async ({ userId, postId }: { userId: string; postId: 
 };
 
 export const getRandomPosts = async (count = 20) => {
-	return await PostModel.find().limit(count);
+	const posts = await PostModel.find().limit(count);
+	return posts.sort((a, b) => (b.updatedAt as any) - (a.updatedAt as any));
 };
 
 // Feed containing user's own posts as well as posts from other users they follow
