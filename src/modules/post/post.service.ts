@@ -29,6 +29,18 @@ export const updatePost = async ({
 export const deletePost = async (postId: string) => PostModel.findByIdAndDelete(postId);
 
 export const likePost = async ({ userId, postId }: { userId: string; postId: string }) => {
+  const post = await findPostById(postId);
+  if (post.likes.includes(userId)) {
+    return await PostModel.findByIdAndUpdate(postId, {
+      $pull: { likes: userId }
+    });
+  }
+	return await PostModel.findByIdAndUpdate(postId, {
+		$addToSet: { likes: userId },
+	});
+};
+
+export const likePostOld = async ({ userId, postId }: { userId: string; postId: string }) => {
 	return await PostModel.findByIdAndUpdate(postId, {
 		$addToSet: { likes: userId },
 		$pull: { dislikes: userId }
