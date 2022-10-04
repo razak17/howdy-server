@@ -17,7 +17,8 @@ import {
 	findPostById,
 	getFeed,
 	likePost,
-	updatePost
+	updatePost,
+  getRandomPosts
 } from './post.service';
 
 export const createPostHandler = async (
@@ -42,6 +43,18 @@ export const getPostHandler = async (
 	try {
 		const post = await findPostById(postId);
 		return res.status(StatusCodes.OK).json(post);
+	} catch (e) {
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
+	}
+};
+
+export const getRandomPostsHandler = async (
+	req: Request,
+	res: Response
+) => {
+	try {
+		const posts = await getRandomPosts();
+		return res.status(StatusCodes.OK).json(posts);
 	} catch (e) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
 	}

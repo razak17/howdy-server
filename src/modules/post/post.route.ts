@@ -4,6 +4,7 @@ import requireUser from '../../middleware/requireUser';
 import {
 	createPostHandler,
 	getPostHandler,
+  getRandomPostsHandler,
 	updatePostHandler,
 	deletePostHandler,
 	likePostHandler,
@@ -19,6 +20,9 @@ router.post('/', requireUser, processRequestBody(createPostSchema.body), createP
 
 // Get Post
 router.get('/:postId', getPostHandler);
+
+// Get Random Posts
+router.get('/explore/random', getRandomPostsHandler);
 
 // Update Post
 router.put('/:postId', requireUser, processRequestBody(updatePostSchema.body), updatePostHandler);
