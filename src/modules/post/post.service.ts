@@ -69,10 +69,11 @@ export const getFeed = async (userId: string) => {
 	const user = await UserModel.findById(userId);
 	const following = user?.following;
 
-	if (!following || following.length === 0) {
-		return await getRandomPosts();
-	}
 	const userPosts = await getUserPosts(userId);
+
+	if (!following || following.length === 0) {
+		return userPosts;
+	}
 
 	const feed = await Promise.all(
 		following.map(async (id) => {
