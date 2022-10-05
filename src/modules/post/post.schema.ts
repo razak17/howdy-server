@@ -28,6 +28,12 @@ export const getTimelineSchema = {
 	})
 };
 
+export const getUserPostsSchema = {
+	params: object({
+		userId: string()
+	})
+};
+
 export type CreatePostBody = TypeOf<typeof createPostSchema.body>;
 export type UpdatePostBody = TypeOf<typeof updatePostSchema.body>;
 export type UpdatePostParams = TypeOf<typeof updatePostSchema.params>;
@@ -36,3 +42,4 @@ export type deletePostParams = TypeOf<typeof updatePostSchema.params>;
 export type likePostParams = TypeOf<typeof updatePostSchema.params>;
 export type dislikePostParams = TypeOf<typeof updatePostSchema.params>;
 export type GetTimelineParams = TypeOf<typeof getTimelineSchema.params>;
+export type GetUserPostsParams = TypeOf<typeof getUserPostsSchema.params>;

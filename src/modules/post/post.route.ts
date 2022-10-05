@@ -43,4 +43,7 @@ router.get('/:userId/feed', requireUser, getFeedHandler);
 // Posts Search
 router.get("/search", requireUser, postsSearchHandler);
 
+// Get User Posts
+router.get('/user/:userId', requireUser, getFeedHandler);
+
 export default router;

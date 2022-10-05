@@ -29,14 +29,14 @@ export const updatePost = async ({
 export const deletePost = async (postId: string) => PostModel.findByIdAndDelete(postId);
 
 export const likePost = async ({ userId, postId }: { userId: string; postId: string }) => {
-  const post = await findPostById(postId);
-  if (post.likes.includes(userId)) {
-    return await PostModel.findByIdAndUpdate(postId, {
-      $pull: { likes: userId }
-    });
-  }
+	const post = await findPostById(postId);
+	if (post?.likes.includes(userId)) {
+		return await PostModel.findByIdAndUpdate(postId, {
+			$pull: { likes: userId }
+		});
+	}
 	return await PostModel.findByIdAndUpdate(postId, {
-		$addToSet: { likes: userId },
+		$addToSet: { likes: userId }
 	});
 };
 
@@ -59,6 +59,11 @@ export const getRandomPosts = async (count = 20) => {
 	return posts.sort((a, b) => (b.createdAt as any) - (a.createdAt as any));
 };
 
+export const getUserPosts = async (userId: string) => {
+	const posts = await PostModel.find({ userId: userId });
+	return posts;
+};
+
 // Feed containing user's own posts as well as posts from other users they follow
 export const getFeed = async (userId: string) => {
 	const user = await UserModel.findById(userId);
@@ -67,7 +72,7 @@ export const getFeed = async (userId: string) => {
 	if (!following || following.length === 0) {
 		return await getRandomPosts();
 	}
-	const userPosts = await PostModel.find({ userId: userId });
+	const userPosts = await getUserPosts(userId);
 
 	const feed = await Promise.all(
 		following.map(async (id) => {
@@ -83,9 +88,9 @@ export const getFeed = async (userId: string) => {
 };
 
 export async function postsSearch(query: string, limit = 20) {
-  const posts = await PostModel.find({
-    description: { $regex: query, $options: "i" },
-  }).limit(limit);
+	const posts = await PostModel.find({
+		description: { $regex: query, $options: 'i' }
+	}).limit(limit);
 
-  return posts;
+	return posts;
 }

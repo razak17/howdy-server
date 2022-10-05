@@ -6,6 +6,7 @@ import {
 	dislikePostParams,
 	GetPostParams,
 	GetTimelineParams,
+	GetUserPostsParams,
 	likePostParams,
 	UpdatePostBody,
 	UpdatePostParams
@@ -19,7 +20,8 @@ import {
 	likePost,
 	updatePost,
 	getRandomPosts,
-	postsSearch
+	postsSearch,
+    getUserPosts
 } from './post.service';
 
 export const createPostHandler = async (
@@ -131,6 +133,20 @@ export const dislikePostHandler = async (
 	}
 	await dislikePost({ userId, postId });
 	return res.status(StatusCodes.OK).send('Post disliked.');
+};
+
+export const getUserPostsHandler = async (
+	req: Request<GetUserPostsParams, Record<string, unknown>, Record<string, unknown>>,
+	res: Response
+) => {
+	const { userId } = req.params;
+
+	try {
+		const feed = await getUserPosts(userId);
+		return res.status(StatusCodes.OK).json(feed);
+	} catch (e) {
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
+	}
 };
 
 export const getFeedHandler = async (
