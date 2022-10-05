@@ -9,7 +9,8 @@ import {
 	deletePostHandler,
 	likePostHandler,
 	dislikePostHandler,
-	getFeedHandler
+	getFeedHandler,
+    postsSearchHandler
 } from './post.controller';
 import { createPostSchema, updatePostSchema } from './post.schema';
 
@@ -19,7 +20,7 @@ const router = express.Router();
 router.post('/', requireUser, processRequestBody(createPostSchema.body), createPostHandler);
 
 // Get Post
-router.get('/:postId', getPostHandler);
+router.get('/find/:postId', getPostHandler);
 
 // Get Random Posts
 router.get('/explore/random', getRandomPostsHandler);
@@ -38,5 +39,8 @@ router.put('/:postId/dislike', requireUser, dislikePostHandler);
 
 // Get User Feed
 router.get('/:userId/feed', requireUser, getFeedHandler);
+
+// Posts Search
+router.get("/search", requireUser, postsSearchHandler);
 
 export default router;

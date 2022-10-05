@@ -81,3 +81,11 @@ export const getFeed = async (userId: string) => {
 		.flat()
 		.sort((a, b) => (b.createdAt as any) - (a.createdAt as any));
 };
+
+export async function postsSearch(query: string, limit = 20) {
+  const posts = await PostModel.find({
+    description: { $regex: query, $options: "i" },
+  }).limit(limit);
+
+  return posts;
+}

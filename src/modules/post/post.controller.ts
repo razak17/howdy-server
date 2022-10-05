@@ -18,7 +18,8 @@ import {
 	getFeed,
 	likePost,
 	updatePost,
-  getRandomPosts
+	getRandomPosts,
+	postsSearch
 } from './post.service';
 
 export const createPostHandler = async (
@@ -48,10 +49,7 @@ export const getPostHandler = async (
 	}
 };
 
-export const getRandomPostsHandler = async (
-	req: Request,
-	res: Response
-) => {
+export const getRandomPostsHandler = async (req: Request, res: Response) => {
 	try {
 		const posts = await getRandomPosts();
 		return res.status(StatusCodes.OK).json(posts);
@@ -144,6 +142,17 @@ export const getFeedHandler = async (
 	try {
 		const feed = await getFeed(userId);
 		return res.status(StatusCodes.OK).json(feed);
+	} catch (e) {
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
+	}
+};
+
+export const postsSearchHandler = async (req: Request, res: Response) => {
+	const query = req.query.q as string;
+	console.log({ query });
+	try {
+		const videos = await postsSearch(query);
+		return res.status(StatusCodes.OK).json(videos);
 	} catch (e) {
 		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(e.message);
 	}
