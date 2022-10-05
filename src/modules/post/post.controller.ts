@@ -165,7 +165,6 @@ export const getFeedHandler = async (
 
 export const postsSearchHandler = async (req: Request, res: Response) => {
 	const query = req.query.q as string;
-	console.log({ query });
 	try {
 		const videos = await postsSearch(query);
 		return res.status(StatusCodes.OK).json(videos);

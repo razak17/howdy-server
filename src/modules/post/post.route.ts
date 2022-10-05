@@ -10,7 +10,8 @@ import {
 	likePostHandler,
 	dislikePostHandler,
 	getFeedHandler,
-    postsSearchHandler
+  getUserPostsHandler,
+  postsSearchHandler
 } from './post.controller';
 import { createPostSchema, updatePostSchema } from './post.schema';
 
@@ -44,6 +45,6 @@ router.get('/:userId/feed', requireUser, getFeedHandler);
 router.get("/search", requireUser, postsSearchHandler);
 
 // Get User Posts
-router.get('/user/:userId', requireUser, getFeedHandler);
+router.get('/user/:userId', requireUser, getUserPostsHandler);
 
 export default router;
