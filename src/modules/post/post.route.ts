@@ -4,14 +4,14 @@ import requireUser from '../../middleware/requireUser';
 import {
 	createPostHandler,
 	getPostHandler,
-  getRandomPostsHandler,
+	getRandomPostsHandler,
 	updatePostHandler,
 	deletePostHandler,
 	likePostHandler,
 	dislikePostHandler,
 	getFeedHandler,
-  getUserPostsHandler,
-  postsSearchHandler
+	getUserPostsHandler,
+	postsSearchHandler
 } from './post.controller';
 import { createPostSchema, updatePostSchema } from './post.schema';
 
@@ -42,7 +42,7 @@ router.put('/:postId/dislike', requireUser, dislikePostHandler);
 router.get('/:userId/feed', requireUser, getFeedHandler);
 
 // Posts Search
-router.get("/search", requireUser, postsSearchHandler);
+router.get('/search', requireUser, postsSearchHandler);
 
 // Get User Posts
 router.get('/user/:userId', requireUser, getUserPostsHandler);

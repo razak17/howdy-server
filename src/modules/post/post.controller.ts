@@ -21,7 +21,7 @@ import {
 	updatePost,
 	getRandomPosts,
 	postsSearch,
-    getUserPosts
+	getUserPosts
 } from './post.service';
 
 export const createPostHandler = async (

@@ -1,4 +1,4 @@
-## Frontend For Social Media Application
+## Backend For Social Media Application
 
 Built with Node.
 
