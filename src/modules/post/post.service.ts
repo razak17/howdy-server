@@ -84,8 +84,6 @@ export const getFeed = async (userId: string) => {
 		})
 	);
 
-	console.log({ feed });
-
 	return userPosts
 		.concat(timeline)
 		.flat()
