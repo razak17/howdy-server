@@ -74,16 +74,20 @@ export const getFeed = async (userId: string) => {
 	if (!following || following.length === 0) {
 		return userPosts;
 	}
+  const timeline: any[] = [];
 
 	const feed = await Promise.all(
 		following.map(async (id) => {
-			const video = await PostModel.find({ userId: new mongoose.Types.ObjectId(id) });
-			return video;
+			const post = await PostModel.find({ userId: new mongoose.Types.ObjectId(id) });
+      timeline.push(post)
+			return post;
 		})
 	);
 
+	console.log({ feed });
+
 	return userPosts
-		.concat(feed[0])
+		.concat(timeline)
 		.flat()
 		.sort((a, b) => (b.createdAt as any) - (a.createdAt as any));
 };
