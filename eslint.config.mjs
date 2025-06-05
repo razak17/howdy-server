@@ -4,6 +4,7 @@ import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 
 export default [
+	...tseslint.configs.recommended,
 	{
 		files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
 		languageOptions: {
@@ -16,16 +17,15 @@ export default [
 		},
 		rules: {
 			...eslint.configs.recommended.rules,
-			...tseslint.configs.recommended.rules,
-			'no-console': 0,
-			'linebreak-style': 0,
+			'no-console': 'off',
+			'linebreak-style': 'off',
 			'no-shadow': 'off',
-			'max-len': [2, { code: 120 }],
-			semi: 1,
-			'object-curly-spacing': [1, 'always'],
-			'object-curly-newline': 0,
-			'no-unused-vars': [1, { args: 'after-used', argsIgnorePattern: '^_' }],
-			'@typescript-eslint/no-unused-vars': 0
+			'max-len': ['error', { code: 120 }],
+			semi: 'warn',
+			'object-curly-spacing': ['warn', 'always'],
+			'object-curly-newline': 'off',
+			'no-unused-vars': 'warn',
+			'@typescript-eslint/no-unused-vars': 'off'
 		}
 	}
 ];
