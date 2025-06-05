@@ -16,13 +16,19 @@ export async function registerHandler(
 ) {
 	try {
 		await createUser({ ...req.body });
-		return res.status(StatusCodes.CREATED).send('user created successfully');
+		return res.status(StatusCodes.CREATED).json({
+      message: 'user created successfully'
+    });
 	} catch (err) {
 		console.log(err);
 		if (err.code === 11000) {
-			return res.status(StatusCodes.CONFLICT).send('username or email is already taken');
+			return res.status(StatusCodes.CONFLICT).json({
+        error: 'username or email is already taken'
+      });
 		}
-		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err.message);
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      error: err.message
+    });
 	}
 }
 
@@ -37,7 +43,9 @@ export async function loginHandler(
 	const isValid = await argon2.verify(user?.password as string, password);
 
 	if (!user || !isValid) {
-		return res.status(StatusCodes.UNAUTHORIZED).send('Invalid email or password');
+		return res.status(StatusCodes.UNAUTHORIZED).json({
+      error: 'Invalid email or password'
+    });
 	}
 
 	const payload = omit(user.toJSON(), ['password']);
@@ -51,14 +59,18 @@ export async function loginHandler(
 		secure: true
 	});
 
-	return res.status(StatusCodes.OK).send(jwt);
+	return res.status(StatusCodes.OK).json({
+    token: jwt
+  });
 }
 
 export async function logoutHandler(_: Request, res: Response) {
 	const user = res.locals.user;
 
 	if (!user) {
-		return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized.');
+		return res.status(StatusCodes.UNAUTHORIZED).json({
+      error: 'You are not logged in'
+    });
 	}
 	res.clearCookie(COOKIE_NAME);
 	res.end();
